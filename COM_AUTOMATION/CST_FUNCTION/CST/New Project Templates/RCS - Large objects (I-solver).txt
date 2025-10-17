@@ -1,0 +1,8 @@
+RCS template for large objects using Integral Equation solver
+
+Units: m, ghz
+Background: vacuum
+Boundaries: open
+Plane Wave: defined in spherical coordinates
+Mesh: surface mesh optimized for large structure
+Solver: I-solver optimized for large structure

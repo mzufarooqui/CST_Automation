@@ -1,0 +1,5 @@
+Units: mm
+Background: normal
+Mesh: optimized for particle-tracking structure
+      (ratiolimit=50, 
+       minimum line number=20)

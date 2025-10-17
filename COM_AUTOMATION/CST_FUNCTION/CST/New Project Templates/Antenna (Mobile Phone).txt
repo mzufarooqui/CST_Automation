@@ -1,0 +1,8 @@
+Units: mm, ghz
+Background: vacuum
+Boundaries: all open
+Mesh: optimized for mobile phones
+ (ratiolimit=20, 
+  merge thin layer fixpoints=on)
+Bounding box: visible
+Energy-Based Mesh Adaption Scheme

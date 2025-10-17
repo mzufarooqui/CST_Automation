@@ -1,0 +1,6 @@
+Units: mm, MHz, us
+Background: vacuum
+Boundaries: open+add space
+Solver: optimized for resonant structure
+        (max. number of pulses=50)
+Plane Wave: defined in spherical coordinates

@@ -1,0 +1,5 @@
+Units: mm, ghz
+Background: vacuum
+Boundaries: all open
+Ground plane: none
+Bounding box: visible

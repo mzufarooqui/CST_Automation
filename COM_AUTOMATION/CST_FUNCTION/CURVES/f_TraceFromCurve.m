@@ -1,0 +1,20 @@
+function status = f_TraceFromCurve(oMWS,component,name,curveName,curveItemName,material,thickness,trackWidth)
+fullShapeName = [ component ':' name ];
+historyStr = [];
+historyStr = sprintf('With TraceFromCurve');
+historyStr = sprintf('%s\n.Reset',historyStr);
+historyStr = sprintf('%s\n.Name "%s"',historyStr,name);
+historyStr = sprintf('%s\n.Component "%s"',historyStr,component);
+historyStr = sprintf('%s\n.Material "%s"',historyStr,material);
+historyStr = sprintf('%s\n.Curve "%s:%s"',historyStr,curveName,curveItemName);
+historyStr = sprintf('%s\n.Thickness "%s"',historyStr,thickness);
+historyStr = sprintf('%s\n.Width "%s"',historyStr,trackWidth);
+historyStr = sprintf('%s\n.RoundStart "False"',historyStr);
+historyStr = sprintf('%s\n.RoundEnd "False"',historyStr);
+historyStr = sprintf('%s\n.DeleteCurve "True"',historyStr);
+historyStr = sprintf('%s\n.GapType "2"',historyStr);
+historyStr = sprintf('%s\n.Create',historyStr);
+historyStr = sprintf('%s\nEnd With',historyStr);
+historyHeader = [ 'define tracefromcurve: ' fullShapeName ];
+status = oMWS.invoke('AddToHistory',historyHeader,historyStr);
+end

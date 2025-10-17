@@ -1,0 +1,24 @@
+function status = f_ChamferEdge(oMWS,componentName,solidName,depth,angle,bSwitch,faceID)
+%% DEFINE CHAMFER EDGE
+% This option cuts all previously picked edges to the specified depth. The parameter angle defines the angle of the chamfer in degrees (default is 45.0°).
+% There are two possibilities the chamfer width and the angle can be applied to the selected edge. Once is to the right and once is to the left of the selected edges. 
+% The parameter switch is to apply the specified settings to the other direction. The faceID will determine from which face we measure the angle (if switch is true, it is the opposite)
+% If depth is chosen in a way that the structure would change significantly, the operation might not be possible. 
+%% FIELD DEFINATION
+%  depth 
+%          If depth is chosen in a way that the structure would change significantly, the operation might not be possible. 
+%  angle 
+%         The parameter angle defines the angle of the chamfer in degrees (default is 45.0°).
+%  bSwitch 
+%         There are two possibilities the chamfer width and the angle can be applied to the selected edge. Once is to the right and once is to the left of the selected edges. 
+%         The parameter switch is to apply the specified settings to the other direction.
+%  faceID 
+%         The faceID will determine from which face we measure the angle (if switch is true, it is the opposite)
+%% EXAMPLE:
+%  status = f_ChamferEdge(oMWS,componentName,solidName,depth,angle,bSwitch,faceID)
+%  status = f_ChamferEdge(oMWS,'component1','solid1',2,45,'False',5)
+%% MATLAB SCRIPT
+historyStr    = sprintf('Solid.ChamferEdge "%s", "%s", "%s", "%s" ',num2str(depth),num2str(angle),num2str(bSwitch),num2str(faceID));
+historyHeader = [ 'chamfer edges of: ' componentName ':' solidName ];
+status        = oMWS.invoke('AddToHistory',historyHeader,historyStr);
+end

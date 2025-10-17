@@ -1,0 +1,86 @@
+*** File Version: 11.00
+
+Number of ports: 4
+Portnames: 1 2 3 4
+Modenumbers: 2 2 1 1
+Portlabels: "" "" "" ""
+StaticSources:
+FloquetPortNames:
+FloquetPortModes:
+Number of frequency-points: 4
+Fmin: 3.300000e+010
+Fmax: 5.000000e+010
+Fscale: 1.000000e+009
+
+
+
+*** newset
+
+*** newmode
+SetType: 100
+Portname: 4
+Modenumber: 1
+Modetype: 4
+PortModeConsState: 0
+*** endmode
+
+*** endset
+
+
+*** newset
+
+*** newmode
+SetType: 100
+Portname: 3
+Modenumber: 1
+Modetype: 4
+PortModeConsState: 0
+*** endmode
+
+*** endset
+
+
+*** newset
+
+*** newmode
+SetType: 100
+Portname: 2
+Modenumber: 2
+Modetype: 4
+PortModeConsState: 0
+*** endmode
+
+*** newmode
+SetType: 100
+Portname: 2
+Modenumber: 1
+Modetype: 4
+PortModeConsState: 0
+*** endmode
+
+*** endset
+
+
+*** newset
+
+*** newmode
+SetType: 100
+Portname: 1
+Modenumber: 2
+Modetype: 4
+PortModeConsState: 0
+*** endmode
+
+*** newmode
+SetType: 100
+Portname: 1
+Modenumber: 1
+Modetype: 4
+PortModeConsState: 0
+*** endmode
+
+*** endset
+
+
+
+

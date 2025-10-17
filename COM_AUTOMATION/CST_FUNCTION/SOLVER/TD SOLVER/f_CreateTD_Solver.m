@@ -1,0 +1,88 @@
+function status = f_CreateTD_Solver(oMWS,oTD_Solver)
+%% DEFINE TIME DOMAIN SOLVER
+%% FIELD DEFINATION
+%  stimulationPort
+%         Selects the port(s)  to be used for excitation.The parameter key may have one of the following values:
+%               'All'           : All ports will be excited once.
+%               'Selected'      : Only those ports / modes are used for excitation that have been set by ExcitationPortMode.
+%               'Plane Wave'    : A plane wave will be used for excitation.
+%               Port number     : The port number (port name) to be used for excitation.
+%  excitationPortMode ( int port, int mode, double ampli, double phase/time, name signl, bool flag )
+%           if stimulationPort = 'selected' then excitationPortMode must define
+%           Defines an excitation for simultaneous or selected simulation, either applied to a port mode or a current distribution. The parameters port/mode or name, respectively, define the excitation source (port/mode or current distribution) to be used.
+%           The selected excitation will be modulated by a time signal of name signl., that has to be defined previously. This signal curve is modified due to the defined ampli and phase/time values, describing the amplitude and the time shift of the excitation. The latter is either based on a time shift or a phase shift definition, depending on the selection of the SetSimultaneousExcitationOffset method. The boolean argument flag activates this excitation definition for the next simulation.
+%           Note: If signl = "default", the chosen reference signal is used for excitation.
+%           MWS offers an Excitation Signal Library where different time signals can be chosen from.
+%           Time signals other than "default" can be chosen only if SimultaneousExcitation is set to True.
+%  stimulationMode ( enum / int key )
+%          Selects the mode to be used for excitation.
+%  steadyStateLimit
+%         This setting defines the steady state monitor. It influences the duration of the simulation. It is a value for the accuracy of the frequency domain signals that are calculated by Fourier Transformation of the time signals.
+%  bMeshAdaption
+%         If MeshAdaption is enabled (flag = True) several Simulation runs are started to automatically find the optimum mesh for the given Problem.
+%  bAutoNormImpedance
+%         S-Parameters are always normalized to a reference impedance. You may either select to norm them to the calculated impedance of the stimulation port or you may specify a number of your choice.  If flag is False the reference impedance will be the calculated impedance of the input port.
+%  normingImpedance
+%         Specifies the impedance to be used as reference impedance for the scattering parameters. This setting will only be considered if AutoNormImpedance is set to True.
+%  bCalculateModesOnly
+%         If flag is True, the solver calculates only the port modes.
+%  bSParaSymmetry
+%         Use s-parameter symmetries.
+%  bStoreTDResultsInCache
+%         If flag is set to True this method stores results of the time domain solver in the result cache.
+%  bFullDeembedding
+%         Set flag to True to perform a calculation with inhomogeneous port accuracy enhancement ("full deembedding"). This implies that the source type is set automatically to All ports / All modes. If some inhomogeneous ports occur in the structure the port modes will be calculated with broadband information which is added to the result tree. After all solver runs have finished the complete S-parameter matrix is generated considering the broadband behavior of the port modes. The number of frequency samples for this procedure can be defined in the special solver settings/waveguide. For more detailed information see the waveguide port overview.
+%  bSuperimposePLWExcitation
+%         This method enables the superimposed stimulation of a previously defined plane wave in addition to a usual S-Parameter calculation. As excitation source type one or more port modes are selected using the StimulationPort and StimulationMode methods and the plane wave excitation is then applied in addition without producing any plane wave specific output files. Consequently the energy contribution of the plane wave excited into the calculation domain influences the S-Parameter and balance results possibly showing some active behavior. Please note that the default reference signal is used for exciting the plane wave.
+%  bUseSensitivityAnalysis
+%% EXAMPLE:
+%  oTD_Solver.stimulationPort           = 1;
+%  oTD_Solver.stimulationMode           = 1;
+%  oTD_Solver.steadyStateLimit          = -30.0;
+%  oTD_Solver.bMeshAdaption             = 'False';
+%  oTD_Solver.bAutoNormImpedance        = 'False';
+%  oTD_Solver.normingImpedance          = 50;
+%  oTD_Solver.bCalculateModesOnly       = 'False';
+%  oTD_Solver.bSParaSymmetry            = 'False';
+%  oTD_Solver.bStoreTDResultsInCache    = 'False';
+%  oTD_Solver.bFullDeembedding          = 'False';
+%  oTD_Solver.bSuperimposePLWExcitation = 'False';
+%  oTD_Solver.bUseSensitivityAnalysis   = 'False';
+%  status = f_CreateTD_Solver(oMWS,oTD_Solver)
+%
+% *For selected stimulation port*
+%
+%  stimulationPort = 'Selected';
+%  oTD_Solver.excitationPortMode = {1,1,0.5,0.5,'default','False'};
+
+%% MATLAB SCRIPT
+historyStr = [];
+%-- IF THE ANY FIELD DOESN'T EXIST IT WILL BE SET TO ITS DEFAULT VALUE
+historyStr = sprintf('Mesh.MeshType "PBA"');
+historyStr = sprintf('%s\nMesh.SetCreator "High Frequency"',historyStr);
+
+historyStr = sprintf('%s\n\nWith Solver',                                           historyStr);
+if isfield(oTD_Solver,'method'),                    historyStr = sprintf('%s\n\t.Method "%s"',                                       historyStr,oTD_Solver.method);                      else historyStr = sprintf('%s\n\t.Method "Hexahedral"',historyStr);                 end
+if isfield(oTD_Solver,'calculationType'),           historyStr = sprintf('%s\n\t.CalculationType "%s"',                              historyStr,oTD_Solver.calculationType);             else historyStr = sprintf('%s\n\t.CalculationType "TD-S"',historyStr);              end
+if isfield(oTD_Solver,'stimulationPort'),           historyStr = sprintf('%s\n\t.StimulationPort "%s"',                              historyStr,num2str(oTD_Solver.stimulationPort));    else historyStr = sprintf('%s\n\t.StimulationPort "1"',historyStr);                 end
+if isfield(oTD_Solver,'stimulationMode'),           historyStr = sprintf('%s\n\t.StimulationMode "%s"',                              historyStr,num2str(oTD_Solver.stimulationMode));    else historyStr = sprintf('%s\n\t.StimulationMode "1"',historyStr);                 end
+if isfield(oTD_Solver,'steadyStateLimit'),          historyStr = sprintf('%s\n\t.SteadyStateLimit "%s"',                             historyStr,num2str(oTD_Solver.steadyStateLimit));   else historyStr = sprintf('%s\n\t.SteadyStateLimit "-30.0"',historyStr);            end
+if isfield(oTD_Solver,'bMeshAdaption'),             historyStr = sprintf('%s\n\t.MeshAdaption "%s"',                                 historyStr,oTD_Solver.bMeshAdaption);               else historyStr = sprintf('%s\n\t.MeshAdaption "False"',historyStr);                end
+if isfield(oTD_Solver,'bAutoNormImpedance'),        historyStr = sprintf('%s\n\t.AutoNormImpedance "%s"',                            historyStr,oTD_Solver.bAutoNormImpedance);          else historyStr = sprintf('%s\n\t.AutoNormImpedance "False"',historyStr);           end
+if strcmp('stimulationPort','Selected')
+    if isfield(oTD_Solver,'excitationPortMode'),        historyStr = sprintf('%s\n\t.excitationPortMode "%s", "%s", "%s", "%s", "%s", "%s"',historyStr,num2str(oTD_Solver.excitationPortMode{1,1}),num2str(oTD_Solver.excitationPortMode{1,2}),num2str(oTD_Solver.excitationPortMode{1,3}),num2str(oTD_Solver.excitationPortMode{1,4}),num2str(oTD_Solver.excitationPortMode{1,5}),num2str(oTD_Solver.excitationPortMode{1,6}));   end
+end
+if strcmp(oTD_Solver.bAutoNormImpedance,'True')
+    if isfield(oTD_Solver,'normingImpedance'),          historyStr = sprintf('%s\n\t.NormingImpedance "%s"',                             historyStr,num2str(oTD_Solver.normingImpedance)); end
+end
+if isfield(oTD_Solver,'bCalculateModesOnly'),       historyStr = sprintf('%s\n\t.CalculateModesOnly "%s"',                           historyStr,oTD_Solver.bCalculateModesOnly);         else historyStr = sprintf('%s\n\t.CalculateModesOnly "False"',historyStr);          end
+if isfield(oTD_Solver,'bSParaSymmetry'),            historyStr = sprintf('%s\n\t.SParaSymmetry "%s"',                                historyStr,oTD_Solver.bSParaSymmetry);              else historyStr = sprintf('%s\n\t.SParaSymmetry "False"',historyStr);               end
+if isfield(oTD_Solver,'bStoreTDResultsInCache'),    historyStr = sprintf('%s\n\t.StoreTDResultsInCache "%s"',                        historyStr,oTD_Solver.bStoreTDResultsInCache);      else historyStr = sprintf('%s\n\t.StoreTDResultsInCache "False"',historyStr);       end
+if isfield(oTD_Solver,'bFullDeembedding'),          historyStr = sprintf('%s\n\t.FullDeembedding "%s"',                              historyStr,oTD_Solver.bFullDeembedding);            else historyStr = sprintf('%s\n\t.FullDeembedding "False"',historyStr);             end
+if isfield(oTD_Solver,'bSuperimposePLWExcitation'), historyStr = sprintf('%s\n\t.SuperimposePLWExcitation "%s"',                     historyStr,oTD_Solver.bSuperimposePLWExcitation);   else historyStr = sprintf('%s\n\t.SuperimposePLWExcitation "False"',historyStr);    end
+if isfield(oTD_Solver,'bUseSensitivityAnalysis'),   historyStr = sprintf('%s\n\t.UseSensitivityAnalysis "%s"',                       historyStr,oTD_Solver.bUseSensitivityAnalysis);     else historyStr = sprintf('%s\n\t.UseSensitivityAnalysis "False"',historyStr);      end
+historyStr = sprintf('%s\nEnd With',                historyStr);
+
+historyHeader = [ 'define solver parameters' ];
+status = oMWS.invoke('AddToHistory',historyHeader,historyStr);
+end

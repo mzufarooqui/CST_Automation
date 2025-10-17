@@ -1,0 +1,10 @@
+function f_SaveAsCST_DS_Project(oDS,projectName)
+% function f_SaveAsCST_MWS_Project(oDS,projectName)
+% Saves the current state of the project, including all results obtained so
+% far (optional with 'bIncludeResults''). 'filename' is the name of the
+% project to be opened.
+bIncludeResults = 'False'; % do not save the results with the project
+%-- SaveAs Project
+%invoke(oDS,'SaveAs',strcat(cd,'\',projectName),bIncludeResults);
+invoke(oDS,'SaveAs',projectName,bIncludeResults);
+end

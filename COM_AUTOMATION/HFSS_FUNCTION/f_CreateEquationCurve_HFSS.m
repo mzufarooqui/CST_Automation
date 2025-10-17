@@ -1,0 +1,5 @@
+function f_CreateEquationCurve_HFSS(oProject,activeDsg,name,materialValue,eqStr,tStart_Stop,numPts)
+oDesign       = oProject.SetActiveDesign(activeDsg);
+oEditor       = oDesign.SetActiveEditor('3D Modeler');
+oEditor.CreateEquationCurve({'NAME:EquationBasedCurveParameters','XtFunction:=',eqStr{1},'YtFunction:=',eqStr{2},'ZtFunction:=',eqStr{3},'tStart:=',tStart_Stop{1},'tEnd:=',tStart_Stop{2},'NumOfPointsOnCurve:=',num2str(numPts),'Version:=',1,{'NAME:PolylineXSection','XSectionType:=','None','XSectionOrient:=','Auto','XSectionWidth:=','0','XSectionTopWidth:=','0','XSectionHeight:=','0','XSectionNumSegments:=','0','XSectionBendType:=','Corner'}},{'NAME:Attributes','Name:=',name,'Flags:=','','Color:=','(143 175 143)','Transparency:=',0,'PartCoordinateSystem:=','Global','UDMId:=','','MaterialValue:=', ['' char(34) materialValue char(34) ''],'SurfaceMaterialValue:=',['' char(34) '' char(34) ''],'SolveInside:=','True','IsMaterialEditable:=','True','UseMaterialAppearance:=','False','IsLightweight:=','False'});
+end

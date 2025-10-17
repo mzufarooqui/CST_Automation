@@ -1,0 +1,7 @@
+Units: um, ghz
+Background: vacuum
+Boundaries: absorbing
+Ground plane: zmin
+Mesh: optimized for planar structure
+      (ratiolimit=20, 
+       merge thin layer fixpoints=on)

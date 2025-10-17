@@ -1,0 +1,6 @@
+Units: mm, ghz
+Background: vacuum
+Boundaries: absorbing
+Mesh: optimized for planar structure
+      (ratiolimit=50, 
+       merge thin layer fixpoints=on)

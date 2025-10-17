@@ -1,0 +1,9 @@
+Units: mm, ghz
+Background: vacuum
+Boundaries: x,y unit cell
+  (phase shift defined by 
+   angle of incidence, inward 
+   traveling plane wave)
+Floquet port: zmin+zmax
+Excitation: zmax
+Bounding box: visible

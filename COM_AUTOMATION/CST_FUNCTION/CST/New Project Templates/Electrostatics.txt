@@ -1,0 +1,9 @@
+Useful for static electric problems where the electric field is given by the gradient of a scalar potential
+
+Typical applications: high voltage devices, capacitors, MEMS sensors
+
+Units: mm
+Background: normal
+Mesh: optimized for electrostatic structure
+  (Tetrahedral: min. number of steps = 5
+   Hexahedral: ratiolimit=50, minimum line number=20)

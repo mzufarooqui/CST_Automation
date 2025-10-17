@@ -1,0 +1,9 @@
+function f_CreateFaceCS_HFSS(oProject,nameCS,faceID,PartID,entityID1,entityID2,whichAxis)
+oDesign = oProject.SetActiveDesign('HFSSDesign1');
+oEditor = oDesign.SetActiveEditor('3D Modeler');
+invoke(oEditor,'CreateFaceCS',{'NAME:FaceCSParameters', 'FaceID:=', faceID, 'PartID:=', PartID, ...
+    {'NAME:OriginPosn', 'IsAttachedToEntity:=',true, 'EntityID:=', entityID1, 'PositionType:=', 'OnVertex', 'UParam:=', 0, 'VParam:=',0, 'XPosition:=', '0', 'YPosition:=', '0', 'ZPosition:=', '0'},  ...
+    {'NAME:AxisPosn', 'IsAttachedToEntity:=',true, 'EntityID:=', entityID2, 'PositionType:=', 'OnVertex', 'UParam:=', 0, 'VParam:=',0, 'XPosition:=', '0', 'YPosition:=', '0', 'ZPosition:=', '0'}, ...
+    'WhichAxis:=',whichAxis}, {'NAME:Attributes', 'Name:=', nameCS});
+end
+

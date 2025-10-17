@@ -1,0 +1,252 @@
+' myModel
+
+Sub Main ()
+
+'@ use template: Coupler (Waveguide)
+
+' Template for Waveguide Coupler
+' ==============================
+
+' (CSTxMWSxONLY)
+
+' set units to mm, ghz
+
+With Units 
+     .Geometry "mm" 
+     .Frequency "ghz" 
+     .Time "ns" 
+End With 
+
+' set background material to pec
+
+With Background 
+     .Type "pec" 
+     .XminSpace "0.0" 
+     .XmaxSpace "0.0" 
+     .YminSpace "0.0" 
+     .YmaxSpace "0.0" 
+     .ZminSpace "0.0" 
+     .ZmaxSpace "0.0" 
+End With 
+
+' set boundary conditions to electric
+
+With Boundary
+     .Xmin "electric" 
+     .Xmax "electric" 
+     .Ymin "electric" 
+     .Ymax "electric" 
+     .Zmin "electric" 
+     .Zmax "electric" 
+     .Xsymmetry "none" 
+     .Ysymmetry "none" 
+     .Zsymmetry "none" 
+End With
+
+Mesh.MinimumCurvatureRefinement "150" 
+
+
+
+'@ new component: component1
+
+Component.New "component1" 
+
+
+'@ define brick: component1:wg
+
+With Brick
+     .Reset 
+     .Name "wg" 
+     .Component "component1" 
+     .Material "Vacuum" 
+     .Xrange "-a/2", "a/2" 
+     .Yrange "-b/2", "b/2" 
+     .Zrange "0", "l" 
+     .Create
+End With
+
+
+'@ pick face
+
+Pick.PickFaceFromId "component1:wg", "1" 
+
+
+'@ define port: 1
+
+With Port 
+     .Reset 
+     .PortNumber "1" 
+     .Label "" 
+     .NumberOfModes "1" 
+     .AdjustPolarization "False" 
+     .PolarizationAngle "0.0" 
+     .ReferencePlaneDistance "0" 
+     .TextSize "50" 
+     .Coordinates "Picks" 
+     .Orientation "positive" 
+     .PortOnBound "True" 
+     .ClipPickedPortToBound "False" 
+     .Xrange "-2.75", "2.75" 
+     .Yrange "-1.25", "1.25" 
+     .Zrange "5", "5" 
+     .XrangeAdd "0.0", "0.0" 
+     .YrangeAdd "0.0", "0.0" 
+     .ZrangeAdd "0.0", "0.0" 
+     .SingleEnded "False" 
+     .Create 
+End With 
+
+
+'@ pick face
+
+Pick.PickFaceFromId "component1:wg", "2" 
+
+
+'@ define port: 2
+
+With Port 
+     .Reset 
+     .PortNumber "2" 
+     .Label "" 
+     .NumberOfModes "1" 
+     .AdjustPolarization "False" 
+     .PolarizationAngle "0.0" 
+     .ReferencePlaneDistance "0" 
+     .TextSize "50" 
+     .Coordinates "Picks" 
+     .Orientation "positive" 
+     .PortOnBound "True" 
+     .ClipPickedPortToBound "False" 
+     .Xrange "-2.75", "2.75" 
+     .Yrange "-1.25", "1.25" 
+     .Zrange "0", "0" 
+     .XrangeAdd "0.0", "0.0" 
+     .YrangeAdd "0.0", "0.0" 
+     .ZrangeAdd "0.0", "0.0" 
+     .SingleEnded "False" 
+     .Create 
+End With 
+
+
+'@ define frequency range
+
+Solver.FrequencyRange "30", "32" 
+
+
+'@ set 3d mesh adaptation properties
+
+With MeshAdaption3D
+    .SetType "HighFrequencyTet" 
+    .SetAdaptionStrategy "ExpertSystem" 
+    .MinPasses "3" 
+    .MaxPasses "3" 
+    .MeshIncrement "5.0" 
+    .MaxDeltaS "0.000001" 
+    .NumberOfDeltaSChecks "2" 
+    .PropagationConstantAccuracy "0.005" 
+    .NumberOfPropConstChecks   "2" 
+    .MinimumAcceptedCellGrowth "0.5" 
+    .RefThetaFactor            "30" 
+    .SetMinimumMeshCellGrowth  "5" 
+    .ErrorEstimatorType        "Automatic" 
+    .RefinementType            "Automatic" 
+    .SnapToGeometry            "True" 
+    .ImproveBadElementQuality  "True" 
+    .SubsequentChecksOnlyOnce  "False" 
+    .WavelengthBasedRefinement "True" 
+    .EnableLinearGrowthLimitation "True" 
+    .SetLinearGrowthLimitation "30" 
+End With
+
+
+'@ define frequency domain solver parameters
+
+Mesh.SetCreator "High Frequency" 
+
+With FDSolver
+     .Reset 
+     .Method "Tetrahedral Mesh" 
+     .OrderTet "Second" 
+     .OrderHFMOR "1" 
+     .OrderSrf "First" 
+     .Stimulation "1", "1" 
+     .ResetExcitationList 
+     .AutoNormImpedance "False" 
+     .NormingImpedance "50" 
+     .ModesOnly "False" 
+     .ConsiderPortLossesTet "True" 
+     .SetShieldAllPorts "False" 
+     .AccuracyHex "1e-6" 
+     .AccuracyTet "1e-4" 
+     .AccuracySrf "1e-3" 
+     .LimitIterations "False" 
+     .MaxIterations "0" 
+     .CalculateExcitationsInParallel "True" 
+     .StoreAllResults "False" 
+     .StoreResultsInCache "False" 
+     .UseHelmholtzEquation "True" 
+     .LowFrequencyStabilization "True" 
+     .Type "Auto" 
+     .MeshAdaptionHex "False" 
+     .MeshAdaptionTet "True" 
+     .AcceleratedRestart "True" 
+     .HexMORSettings "", "1001" 
+     .NewIterativeSolver "True" 
+     .TDCompatibleMaterials "False" 
+     .ExtrudeOpenBC "False" 
+     .SetOpenBCTypeHex "Default" 
+     .SetOpenBCTypeTet "Default" 
+     .AddMonitorSamples "True" 
+     .SParameterSweep "False" 
+     .CalcStatBField "False" 
+     .UseDoublePrecision "False" 
+     .UseDoublePrecision_ML "True" 
+     .MixedOrderSrf "False" 
+     .MixedOrderTet "False" 
+     .PreconditionerAccuracyIntEq "0.15" 
+     .MLFMMAccuracy "Default" 
+     .MinMLFMMBoxSize "0.20" 
+     .UseCFIEForCPECIntEq "true" 
+     .UseFastRCSSweepIntEq "true" 
+     .UseSensitivityAnalysis "False" 
+     .SetRCSSweepProperties "0.0", "0.0", "0","0.0", "0.0", "0", "0" 
+     .SweepErrorThreshold "True", "0.01" 
+     .SweepErrorChecks "2" 
+     .SweepMinimumSamples "3" 
+     .SweepConsiderAll "True" 
+     .SweepConsiderReset 
+     .InterpolationSamples "1001" 
+     .SweepWeightEvanescent "1.0" 
+     .AddSampleInterval "", "", "1", "Automatic", "True" 
+     .AddSampleInterval "", "", "11", "Automatic", "False" 
+     .MPIParallelization "False"
+     .UseDistributedComputing "False"
+     .NetworkComputingStrategy "RunRemote"
+     .NetworkComputingJobCount "3"
+     .LimitCPUs "True"
+     .MaxCPUs "32"
+End With
+
+With IESolver
+     .Reset 
+     .UseFastFrequencySweep "False" 
+     .UseIEGroundPlane "False" 
+     .PreconditionerType "Auto" 
+End With
+
+With IESolver
+     .SetFMMFFCalcStopLevel "0" 
+     .SetFMMFFCalcNumInterpPoints "6" 
+     .UseFMMFarfieldCalc "True" 
+     .SetCFIEAlpha "0.500000" 
+     .LowFrequencyStabilization "False" 
+     .LowFrequencyStabilizationML "True" 
+     .Multilayer "False" 
+     .SetiMoMACC_I "0.0001" 
+     .SetiMoMACC_M "0.0001" 
+     .DeembedExternalPorts "True" 
+     .SetOpenBC_XY "True" 
+End With
+
+
+End Sub

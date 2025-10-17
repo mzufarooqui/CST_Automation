@@ -1,0 +1,4 @@
+Units: mm, ghz
+Background: vacuum
+Boundaries: all magnetic
+Mesh: optimized for PCB structure

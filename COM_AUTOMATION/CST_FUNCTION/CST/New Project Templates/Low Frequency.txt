@@ -1,0 +1,12 @@
+Useful for time-harmonic and general time-dependent problems which have to consider eddy currents, skin depth and/or proximity effects or displacement currents
+ 
+Typical applications: NDT, proximity sensors, inductively coupled power transfer, induction heating, high voltage insulators, switch gears
+
+Units: mm, Hz
+Boundaries: electric
+Background: normal
+Mesh: optimized for low frequency structure
+  (Tetrahedral: min. number of steps = 5
+   Hexahedral: ratiolimit=50, minimum line number=20)
+
+

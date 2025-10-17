@@ -1,0 +1,9 @@
+Useful for linear & nonlinear time-independent magnetic problems
+
+Typical applications: magnets, magnetic valves, actuators, motors, generators, sensors
+
+Units: mm
+Background: normal 
+Mesh: optimized for magnetostatic structure
+  (Tetrahedral: min. number of steps = 5
+   Hexahedral: ratiolimit=50, minimum line number=20)

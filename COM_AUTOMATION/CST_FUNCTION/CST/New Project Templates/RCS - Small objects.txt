@@ -1,0 +1,6 @@
+RCS template for small objects
+
+Units: mm, ghz
+Background: vacuum
+Boundaries: open
+Plane Wave: defined in spherical coordinates

@@ -1,0 +1,15 @@
+function status = f_CreateAnalyticalCurve(oMWS,name,curve,xyz,paramRange)
+%status = f_CreateAnalyticalCurve(oMWS,'analytical1','curve1',{'t','0','t^2/(4*focus)'},{'0','dia/2'})
+historyStr = [];
+historyStr = sprintf('With AnalyticalCurve');
+historyStr = sprintf('%s\n\t.Reset',historyStr); 
+historyStr = sprintf('%s\n\t.Name "%s"',historyStr,name);
+historyStr = sprintf('%s\n\t.Curve "%s"',historyStr,curve);
+historyStr = sprintf('%s\n\t.LawX "%s"',historyStr,xyz{1});
+historyStr = sprintf('%s\n\t.LawY "%s"',historyStr,xyz{2});
+historyStr = sprintf('%s\n\t.LawZ "%s"',historyStr,xyz{3});
+historyStr = sprintf('%s\n\t.ParameterRange "%s", "%s"',historyStr,paramRange{1},paramRange{2});
+historyStr = sprintf('%s\n\t.Create',historyStr);
+historyStr = sprintf('%s\nEnd With',historyStr);
+historyHeader = [ 'define curve analytical: ' curve ':' name ];
+status = oMWS.invoke('AddToHistory',historyHeader,historyStr);

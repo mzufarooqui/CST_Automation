@@ -1,0 +1,9 @@
+Units: mm
+Boundaries: electric
+Background: PEC, no space
+
+Mesh: tetrahedral, optimized for mechanical computations
+
+Solver : Reference temperature: 293.1 K
+
+Intersection check: Activated for mechanical material properties. 

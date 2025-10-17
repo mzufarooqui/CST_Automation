@@ -1,0 +1,295 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>f_CreateMaterial</title>
+      <meta name="generator" content="MATLAB 7.5">
+      <meta name="date" content="2012-04-02">
+      <meta name="m-file" content="f_CreateMaterial"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content">
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#2">DEFINE MATERIAL PROPERTIES</a></li>
+               <li><a href="#3">FIELD DEFINATION</a></li>
+               <li><a href="#4">EXAMPLE:</a></li>
+               <li><a href="#5">MATLAB SCRIPT</a></li>
+            </ul>
+         </div><pre class="codeinput"><span class="keyword">function</span> status = f_CreateMaterial(oMWS,oMaterial)
+</pre><h2>DEFINE MATERIAL PROPERTIES<a name="2"></a></h2>
+         <div>
+            <ol>
+               <li>oMaterial.name                  =</li>
+               <li>oMaterial.type                  =</li>
+               <li>oMaterial.rho                   =</li>
+               <li>oMaterial.kappa                 =</li>
+               <li>oMaterial.mue                   =</li>
+               <li>oMaterial.bNLAnisotropy         =</li>
+               <li>oMaterial.NLAStackingFactor     =</li>
+               <li>oMaterial.NLADirectionX         =</li>
+               <li>oMaterial.NLADirectionY         =</li>
+               <li>oMaterial.NLADirectionZ         =</li>
+               <li>oMaterial.thermalType           =</li>
+               <li>oMaterial.thermalConductivity   =</li>
+               <li>oMaterial.heatCapacity          =</li>
+               <li>oMaterial.metabolicRate         =</li>
+               <li>oMaterial.bloodFlow             =</li>
+               <li>oMaterial.voxelConvection       =</li>
+               <li>oMaterial.mechanicsType         =</li>
+               <li>oMaterial.freqUnit              =</li>
+               <li>oMaterial.lenUnit               =</li>
+               <li>oMaterial.referenceCoordSystem  =</li>
+               <li>oMaterial.coordSystemType       =</li>
+               <li>oMaterial.colour                =</li>
+               <li>oMaterial.bWireframe            =</li>
+               <li>oMaterial.bReflection           =</li>
+               <li>oMaterial.bAllowoutline         =</li>
+               <li>oMaterial.bTransparentoutline   =</li>
+               <li>oMaterial.transparency          =</li>
+            </ol>
+         </div>
+         <h2>FIELD DEFINATION<a name="3"></a></h2><pre>name
+         Sets the name for the new material to be created using .Create.
+type     'PEC, 'Normal', 'Anisotropic', 'Lossy Metal', 'Corrugatedwall', 'Ohmic sheet', 'Tensor formula'
+         Sets the type for the material to be defined.
+epsilon / EpsilonX / EpsilonY / EpsilonZ ( double dValue )
+         Defines the relative electric permittivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal electric permittivity tensor can be set with the respective methods.
+mue / MueX / MueY / MueZ ( double dValue )
+         Defines the relative permeability. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal permeability tensor can be set with the respective methods.
+rho ( double dValue )
+         Sets the material density value of the material in kg/m&sup3;, i.e. used for SAR calculations.
+         This setting is important for transient thermal simulations.
+kappa / KappaX / KappaY / KappaZ ( double dValue )
+         Set the electric conductivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. Has no effect if .TanDGiven is set to True.
+kappaM / KappaMX / KappaMY / KappaMZ ( double dValue )
+         Set the magnetic conductivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. Has no effect if .TanDMGiven is set to True.
+colour ( double red, double green, double blue )
+       Sets the colour for a new material by double values ranging from 0 to 1.
+bWireframe ( bool switch )
+       If switch is True, all solids associated with this material will be displayed as a wireframe.
+transparency ( double dValue )
+       Allows to changes the appearance from opaque (dValue = 0) to a transparency value up to 100. Setting will be ignored if .Wireframe is set.
+bReflection( bool switch )
+       If switch is True, all solids associated with this material are displayed using reflective surfaces (usually applied to metallic surfaces).
+bAllowoutline( bool switch )
+       Determine whether outlines are allowed to be drawn for solids belonging to this material. The actual visibility of outlines also depends on the setting of the global outline state as well as the current selection. If switch is False, outlines will never be drawn for the corresponding solids.
+bTransparentoutline( bool switch )
+       If switch is True, outlines are also displayed when the corresponding solids are drawn transparently.</pre><h2>EXAMPLE:<a name="4"></a></h2><pre>oMaterial.name    = 'material1';
+oMaterial.colour  = [ 0.5 0.5 0.5];
+oMaterial.type    = 'Lossy Metal';
+oMaterial.epsilon = 1;
+oMaterial.mue     = 1;
+status = f_CreateMaterial(oMWS,oMaterial);</pre><h2>MATLAB SCRIPT<a name="5"></a></h2><pre class="codeinput">historyStr = [];
+historyStr = sprintf(<span class="string">'With Material'</span>);
+historyStr = sprintf(<span class="string">'%s\n.Reset'</span>,              historyStr);
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'name'</span>),                   historyStr = sprintf(<span class="string">'%s\n.Name "%s"'</span>,                    historyStr,num2str(oMaterial.name));                                      <span class="keyword">else</span> <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'type'</span>),                   historyStr = sprintf(<span class="string">'%s\n.Type "%s"'</span>,                  historyStr,num2str(oMaterial.type));                                      <span class="keyword">else</span> <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'rho'</span>),                    historyStr = sprintf(<span class="string">'%s\n.Rho "%s"'</span>,                     historyStr,num2str(oMaterial.rho));                                       <span class="keyword">else</span> <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'kappa'</span>),                  historyStr = sprintf(<span class="string">'%s\n.Kappa "%s"'</span>,                   historyStr,num2str(oMaterial.kappa));                                     <span class="keyword">else</span> <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'mue'</span>),                    historyStr = sprintf(<span class="string">'%s\n.Mue "%s"'</span>,                     historyStr,num2str(oMaterial.mue));                                       <span class="keyword">else</span> <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'epsilon'</span>),                historyStr = sprintf(<span class="string">'%s\n.Epsilon "%s"'</span>,                 historyStr,num2str(oMaterial.epsilon));                                       <span class="keyword">else</span> <span class="keyword">end</span>
+
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'bNLAnisotropy'</span>),          historyStr = sprintf(<span class="string">'%s\n.NLAnisotropy "%s"'</span>,            historyStr,num2str(oMaterial.bNLAnisotropy));                             <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.NLAnisotropy "False"'</span>,          historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'NLAStackingFactor'</span>),      historyStr = sprintf(<span class="string">'%s\n.NLAStackingFactor "%s"'</span>,       historyStr,num2str(oMaterial.NLAStackingFactor));                         <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.NLAStackingFactor "1"'</span>,         historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'NLADirectionX'</span>),          historyStr = sprintf(<span class="string">'%s\n.NLADirectionX "%s"'</span>,           historyStr,num2str(oMaterial.NLADirectionX));                             <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.NLADirectionX "1"'</span>,             historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'NLADirectionY'</span>),          historyStr = sprintf(<span class="string">'%s\n.NLADirectionY "%s"'</span>,           historyStr,num2str(oMaterial.NLADirectionY));                             <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.NLADirectionY "0"'</span>,             historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'NLADirectionZ'</span>),          historyStr = sprintf(<span class="string">'%s\n.NLADirectionZ "%s"'</span>,           historyStr,num2str(oMaterial.NLADirectionZ));                             <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.NLADirectionZ "0"'</span>,             historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'thermalType'</span>),            historyStr = sprintf(<span class="string">'%s\n.ThermalType "%s"'</span>,             historyStr,num2str(oMaterial.thermalType));                               <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.ThermalType "Normal"'</span>,          historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'thermalConductivity'</span>),    historyStr = sprintf(<span class="string">'%s\n.ThermalConductivity "%s"'</span>,     historyStr,num2str(oMaterial.thermalConductivity));                       <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.ThermalConductivity "0"'</span>,       historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'heatCapacity'</span>),           historyStr = sprintf(<span class="string">'%s\n.HeatCapacity "%s"'</span>,            historyStr,num2str(oMaterial.heatCapacity));                              <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.HeatCapacity "0"'</span>,              historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'metabolicRate'</span>),          historyStr = sprintf(<span class="string">'%s\n.MetabolicRate "%s"'</span>,           historyStr,num2str(oMaterial.metabolicRate));                             <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.MetabolicRate "0"'</span>,             historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'bloodFlow'</span>),              historyStr = sprintf(<span class="string">'%s\n.BloodFlow "%s"'</span>,               historyStr,num2str(oMaterial.bloodFlow));                                 <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.BloodFlow "0"'</span>,                 historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'voxelConvection'</span>),        historyStr = sprintf(<span class="string">'%s\n.VoxelConvection "%s"'</span>,         historyStr,num2str(oMaterial.voxelConvection));                           <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.VoxelConvection "0"'</span>,           historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'mechanicsType'</span>),          historyStr = sprintf(<span class="string">'%s\n.MechanicsType "%s"'</span>,           historyStr,num2str(oMaterial.mechanicsType));                             <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.MechanicsType "Unused"'</span>,        historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'freqUnit'</span>),               historyStr = sprintf(<span class="string">'%s\n.SetMaterialUnit "%s", "%s"'</span>,   historyStr,num2str(oMaterial.freqUnit),num2str(oMaterial.lenUnit));       <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.SetMaterialUnit "GHz", "mm"'</span>,   historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'frqType'</span>),                historyStr = sprintf(<span class="string">'%s\n.FrqType "%s"'</span>,                 historyStr,num2str(oMaterial.frqType));                                   <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.FrqType "all"'</span>,                 historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'referenceCoordSystem'</span>),   historyStr = sprintf(<span class="string">'%s\n.ReferenceCoordSystem "%s"'</span>,    historyStr,num2str(oMaterial.referenceCoordSystem));                      <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.ReferenceCoordSystem "Global"'</span>, historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'coordSystemType'</span>),        historyStr = sprintf(<span class="string">'%s\n.CoordSystemType "%s"'</span>,         historyStr,num2str(oMaterial.coordSystemType));                           <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.CoordSystemType "Cartesian"'</span>,   historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'colour'</span>),                 historyStr = sprintf(<span class="string">'%s\n.Colour "%s", "%s", "%s" '</span>,     historyStr,num2str(oMaterial.colour(1)),num2str(oMaterial.colour(2)),num2str(oMaterial.colour(3))); <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.Colour "0", "1", "1" '</span>,historyStr);         <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'bWireframe'</span>),             historyStr = sprintf(<span class="string">'%s\n.Wireframe "%s" '</span>,              historyStr,num2str(oMaterial.bWireframe));                                <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.Wireframe "False" '</span>,            historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'bReflection'</span>),            historyStr = sprintf(<span class="string">'%s\n.Reflection "%s" '</span>,             historyStr,num2str(oMaterial.bReflection));                               <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.Reflection "False" '</span>,           historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'bAllowoutline'</span>),          historyStr = sprintf(<span class="string">'%s\n.Allowoutline "%s" '</span>,           historyStr,num2str(oMaterial.bAllowoutline));                             <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.Allowoutline "True" '</span>,          historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'bTransparentoutline'</span>),    historyStr = sprintf(<span class="string">'%s\n.Transparentoutline "%s" '</span>,     historyStr,num2str(oMaterial.bTransparentoutline));                       <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.Transparentoutline "False" '</span>,   historyStr);   <span class="keyword">end</span>
+<span class="keyword">if</span> isfield(oMaterial,<span class="string">'transparency'</span>),           historyStr = sprintf(<span class="string">'%s\n.Transparency "%s" '</span>,           historyStr,num2str(oMaterial.transparency));                              <span class="keyword">else</span> historyStr = sprintf(<span class="string">'%s\n.Transparency "0" '</span>,             historyStr);   <span class="keyword">end</span>
+historyStr = sprintf(<span class="string">'%s\n.Create'</span>, historyStr);
+historyStr = sprintf(<span class="string">'%s\nEnd With'</span>,historyStr);
+historyHeader = [ <span class="string">'define material: '</span> oMaterial.name];
+status = oMWS.invoke(<span class="string">'AddToHistory'</span>,historyHeader,historyStr);
+<span class="keyword">end</span>
+</pre><p class="footer"><br>
+            Published with MATLAB&reg; 7.5<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+function status = f_CreateMaterial(oMWS,oMaterial)
+%% DEFINE MATERIAL PROPERTIES
+% # oMaterial.name                  =
+% # oMaterial.type                  =
+% # oMaterial.rho                   =
+% # oMaterial.kappa                 =
+% # oMaterial.mue                   =
+% # oMaterial.bNLAnisotropy         =
+% # oMaterial.NLAStackingFactor     =
+% # oMaterial.NLADirectionX         =
+% # oMaterial.NLADirectionY         =
+% # oMaterial.NLADirectionZ         =
+% # oMaterial.thermalType           =
+% # oMaterial.thermalConductivity   =
+% # oMaterial.heatCapacity          =
+% # oMaterial.metabolicRate         =
+% # oMaterial.bloodFlow             =
+% # oMaterial.voxelConvection       =
+% # oMaterial.mechanicsType         =
+% # oMaterial.freqUnit              =
+% # oMaterial.lenUnit               =
+% # oMaterial.referenceCoordSystem  =
+% # oMaterial.coordSystemType       =
+% # oMaterial.colour                =
+% # oMaterial.bWireframe            =
+% # oMaterial.bReflection           =
+% # oMaterial.bAllowoutline         =
+% # oMaterial.bTransparentoutline   =
+% # oMaterial.transparency          =
+%
+%% FIELD DEFINATION
+%  name
+%           Sets the name for the new material to be created using .Create.
+%  type     'PEC, 'Normal', 'Anisotropic', 'Lossy Metal', 'Corrugatedwall', 'Ohmic sheet', 'Tensor formula'            
+%           Sets the type for the material to be defined.  
+%  epsilon / EpsilonX / EpsilonY / EpsilonZ ( double dValue )
+%           Defines the relative electric permittivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal electric permittivity tensor can be set with the respective methods.
+%  mue / MueX / MueY / MueZ ( double dValue )
+%           Defines the relative permeability. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal permeability tensor can be set with the respective methods.
+%  rho ( double dValue )
+%           Sets the material density value of the material in kg/m³, i.e. used for SAR calculations.
+%           This setting is important for transient thermal simulations.
+%  kappa / KappaX / KappaY / KappaZ ( double dValue )
+%           Set the electric conductivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. Has no effect if .TanDGiven is set to True.
+%  kappaM / KappaMX / KappaMY / KappaMZ ( double dValue )
+%           Set the magnetic conductivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. Has no effect if .TanDMGiven is set to True.
+%  colour ( double red, double green, double blue )
+%         Sets the colour for a new material by double values ranging from 0 to 1.
+%  bWireframe ( bool switch )
+%         If switch is True, all solids associated with this material will be displayed as a wireframe.
+%  transparency ( double dValue )
+%         Allows to changes the appearance from opaque (dValue = 0) to a transparency value up to 100. Setting will be ignored if .Wireframe is set.
+%  bReflection( bool switch )
+%         If switch is True, all solids associated with this material are displayed using reflective surfaces (usually applied to metallic surfaces).
+%  bAllowoutline( bool switch )
+%         Determine whether outlines are allowed to be drawn for solids belonging to this material. The actual visibility of outlines also depends on the setting of the global outline state as well as the current selection. If switch is False, outlines will never be drawn for the corresponding solids.
+%  bTransparentoutline( bool switch )
+%         If switch is True, outlines are also displayed when the corresponding solids are drawn transparently.
+%% EXAMPLE:
+%  oMaterial.name    = 'material1';
+%  oMaterial.colour  = [ 0.5 0.5 0.5];
+%  oMaterial.type    = 'Lossy Metal';
+%  oMaterial.epsilon = 1;
+%  oMaterial.mue     = 1;
+%  status = f_CreateMaterial(oMWS,oMaterial);
+
+%% MATLAB SCRIPT
+historyStr = [];
+historyStr = sprintf('With Material'); 
+historyStr = sprintf('%s\n.Reset',              historyStr); 
+if isfield(oMaterial,'name'),                   historyStr = sprintf('%s\n.Name "%s"',                    historyStr,num2str(oMaterial.name));                                      else end
+if isfield(oMaterial,'type'),                   historyStr = sprintf('%s\n.Type "%s"',                  historyStr,num2str(oMaterial.type));                                      else end
+if isfield(oMaterial,'rho'),                    historyStr = sprintf('%s\n.Rho "%s"',                     historyStr,num2str(oMaterial.rho));                                       else end
+if isfield(oMaterial,'kappa'),                  historyStr = sprintf('%s\n.Kappa "%s"',                   historyStr,num2str(oMaterial.kappa));                                     else end
+if isfield(oMaterial,'mue'),                    historyStr = sprintf('%s\n.Mue "%s"',                     historyStr,num2str(oMaterial.mue));                                       else end
+if isfield(oMaterial,'epsilon'),                historyStr = sprintf('%s\n.Epsilon "%s"',                 historyStr,num2str(oMaterial.epsilon));                                       else end
+
+if isfield(oMaterial,'bNLAnisotropy'),          historyStr = sprintf('%s\n.NLAnisotropy "%s"',            historyStr,num2str(oMaterial.bNLAnisotropy));                             else historyStr = sprintf('%s\n.NLAnisotropy "False"',          historyStr);   end
+if isfield(oMaterial,'NLAStackingFactor'),      historyStr = sprintf('%s\n.NLAStackingFactor "%s"',       historyStr,num2str(oMaterial.NLAStackingFactor));                         else historyStr = sprintf('%s\n.NLAStackingFactor "1"',         historyStr);   end
+if isfield(oMaterial,'NLADirectionX'),          historyStr = sprintf('%s\n.NLADirectionX "%s"',           historyStr,num2str(oMaterial.NLADirectionX));                             else historyStr = sprintf('%s\n.NLADirectionX "1"',             historyStr);   end
+if isfield(oMaterial,'NLADirectionY'),          historyStr = sprintf('%s\n.NLADirectionY "%s"',           historyStr,num2str(oMaterial.NLADirectionY));                             else historyStr = sprintf('%s\n.NLADirectionY "0"',             historyStr);   end
+if isfield(oMaterial,'NLADirectionZ'),          historyStr = sprintf('%s\n.NLADirectionZ "%s"',           historyStr,num2str(oMaterial.NLADirectionZ));                             else historyStr = sprintf('%s\n.NLADirectionZ "0"',             historyStr);   end
+if isfield(oMaterial,'thermalType'),            historyStr = sprintf('%s\n.ThermalType "%s"',             historyStr,num2str(oMaterial.thermalType));                               else historyStr = sprintf('%s\n.ThermalType "Normal"',          historyStr);   end
+if isfield(oMaterial,'thermalConductivity'),    historyStr = sprintf('%s\n.ThermalConductivity "%s"',     historyStr,num2str(oMaterial.thermalConductivity));                       else historyStr = sprintf('%s\n.ThermalConductivity "0"',       historyStr);   end
+if isfield(oMaterial,'heatCapacity'),           historyStr = sprintf('%s\n.HeatCapacity "%s"',            historyStr,num2str(oMaterial.heatCapacity));                              else historyStr = sprintf('%s\n.HeatCapacity "0"',              historyStr);   end
+if isfield(oMaterial,'metabolicRate'),          historyStr = sprintf('%s\n.MetabolicRate "%s"',           historyStr,num2str(oMaterial.metabolicRate));                             else historyStr = sprintf('%s\n.MetabolicRate "0"',             historyStr);   end
+if isfield(oMaterial,'bloodFlow'),              historyStr = sprintf('%s\n.BloodFlow "%s"',               historyStr,num2str(oMaterial.bloodFlow));                                 else historyStr = sprintf('%s\n.BloodFlow "0"',                 historyStr);   end
+if isfield(oMaterial,'voxelConvection'),        historyStr = sprintf('%s\n.VoxelConvection "%s"',         historyStr,num2str(oMaterial.voxelConvection));                           else historyStr = sprintf('%s\n.VoxelConvection "0"',           historyStr);   end
+if isfield(oMaterial,'mechanicsType'),          historyStr = sprintf('%s\n.MechanicsType "%s"',           historyStr,num2str(oMaterial.mechanicsType));                             else historyStr = sprintf('%s\n.MechanicsType "Unused"',        historyStr);   end
+if isfield(oMaterial,'freqUnit'),               historyStr = sprintf('%s\n.SetMaterialUnit "%s", "%s"',   historyStr,num2str(oMaterial.freqUnit),num2str(oMaterial.lenUnit));       else historyStr = sprintf('%s\n.SetMaterialUnit "GHz", "mm"',   historyStr);   end
+if isfield(oMaterial,'frqType'),                historyStr = sprintf('%s\n.FrqType "%s"',                 historyStr,num2str(oMaterial.frqType));                                   else historyStr = sprintf('%s\n.FrqType "all"',                 historyStr);   end
+if isfield(oMaterial,'referenceCoordSystem'),   historyStr = sprintf('%s\n.ReferenceCoordSystem "%s"',    historyStr,num2str(oMaterial.referenceCoordSystem));                      else historyStr = sprintf('%s\n.ReferenceCoordSystem "Global"', historyStr);   end
+if isfield(oMaterial,'coordSystemType'),        historyStr = sprintf('%s\n.CoordSystemType "%s"',         historyStr,num2str(oMaterial.coordSystemType));                           else historyStr = sprintf('%s\n.CoordSystemType "Cartesian"',   historyStr);   end
+if isfield(oMaterial,'colour'),                 historyStr = sprintf('%s\n.Colour "%s", "%s", "%s" ',     historyStr,num2str(oMaterial.colour(1)),num2str(oMaterial.colour(2)),num2str(oMaterial.colour(3))); else historyStr = sprintf('%s\n.Colour "0", "1", "1" ',historyStr);         end
+if isfield(oMaterial,'bWireframe'),             historyStr = sprintf('%s\n.Wireframe "%s" ',              historyStr,num2str(oMaterial.bWireframe));                                else historyStr = sprintf('%s\n.Wireframe "False" ',            historyStr);   end
+if isfield(oMaterial,'bReflection'),            historyStr = sprintf('%s\n.Reflection "%s" ',             historyStr,num2str(oMaterial.bReflection));                               else historyStr = sprintf('%s\n.Reflection "False" ',           historyStr);   end
+if isfield(oMaterial,'bAllowoutline'),          historyStr = sprintf('%s\n.Allowoutline "%s" ',           historyStr,num2str(oMaterial.bAllowoutline));                             else historyStr = sprintf('%s\n.Allowoutline "True" ',          historyStr);   end
+if isfield(oMaterial,'bTransparentoutline'),    historyStr = sprintf('%s\n.Transparentoutline "%s" ',     historyStr,num2str(oMaterial.bTransparentoutline));                       else historyStr = sprintf('%s\n.Transparentoutline "False" ',   historyStr);   end
+if isfield(oMaterial,'transparency'),           historyStr = sprintf('%s\n.Transparency "%s" ',           historyStr,num2str(oMaterial.transparency));                              else historyStr = sprintf('%s\n.Transparency "0" ',             historyStr);   end
+historyStr = sprintf('%s\n.Create', historyStr);
+historyStr = sprintf('%s\nEnd With',historyStr);
+historyHeader = [ 'define material: ' oMaterial.name];
+status = oMWS.invoke('AddToHistory',historyHeader,historyStr);
+end
+##### SOURCE END #####
+-->
+   </body>
+</html>

@@ -1,0 +1,13 @@
+Units: mm
+Boundaries: electric
+Background: normal, no space, 
+            Thermal cond. 0.024 W/K/m
+            Heat cap. 1.005 kJ/kg/K
+	    Rho 1.293 kg / m^3
+
+Mesh: optimized for thermal problems
+      (ratiolimit=50, min. line number=20)
+
+Solver : Background temperature: 293.1 K
+
+Intersection check: Activated for thermal material properties. 

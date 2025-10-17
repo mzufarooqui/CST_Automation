@@ -1,0 +1,7 @@
+Units: mm, ghz
+Background: vacuum
+Boundaries: open
+Bounding box: visible
+Mesh: optimized for wire structure
+      (ratiolimit=20, 
+       pec edge refinement=10)

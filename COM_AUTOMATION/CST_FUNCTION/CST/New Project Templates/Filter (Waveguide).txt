@@ -1,0 +1,9 @@
+Units: mm, ghz
+Background: pec
+Boundaries: electric
+Solver: optimized for resonant structure
+ (max. number of pulses=50, 
+ online ar-filter=on)
+Mesh: optimized for filter structure
+ (ratiolimit=50, 
+ pec edge refinement=4)

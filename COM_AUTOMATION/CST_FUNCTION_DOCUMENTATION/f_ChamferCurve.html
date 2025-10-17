@@ -1,0 +1,170 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>f_ChamferCurve</title>
+      <meta name="generator" content="MATLAB 7.5">
+      <meta name="date" content="2012-03-05">
+      <meta name="m-file" content="f_ChamferCurve"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content">
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#2">DEFINE CHAMFER CURVE</a></li>
+               <li><a href="#3">FIELD DEFINATION</a></li>
+               <li><a href="#4">EXAMPLE:</a></li>
+               <li><a href="#5">MATLAB SCRIPT</a></li>
+            </ul>
+         </div><pre class="codeinput"><span class="keyword">function</span> status = f_ChamferCurve(oMWS,name,width,curve,curveItem1,curveItem2,edgeId1,edgeId2,vertexId1,vertexId2)
+</pre><h2>DEFINE CHAMFER CURVE<a name="2"></a></h2>
+         <h2>FIELD DEFINATION<a name="3"></a></h2><pre>name
+        Sets the name of the new chamfer item.
+width
+       Specify a valid expression for the width of the chamfer.
+curve
+       Specifies the curve the new created chamfer item object will belong to.
+curveItem1
+       Selects a specified curve item which has to belong to the same curve object as curve item No.2.
+curveItem2
+        Selects a specified curve item which has to belong to the same curve object as curve item No.1.
+edgeId1
+       Defines a specified edge of a curve item by its identity number.
+edgeId2
+        Defines a specified edge of a curve item by its identity number.
+vertexId1
+       Defines a specified vertex of a curve item by its identity number.
+vertexId2
+       Defines a specified vertex of a curve item by its identity number.</pre><h2>EXAMPLE:<a name="4"></a></h2><pre>status = f_ChamferCurve(oMWS,name,width,curve,curveItem1,curveItem2,edgeId1,edgeId2,vertexId1,vertexId2);
+status = f_ChamferCurve(oMWS,'chamfer1',4,'curve1','rectangle1','rectangle1',2,3,3,3);</pre><h2>MATLAB SCRIPT<a name="5"></a></h2><pre class="codeinput">historyStr = [];
+historyStr = sprintf(<span class="string">'With ChamferCurve'</span>);
+historyStr = sprintf(<span class="string">'%s\n\t.Reset'</span>,historyStr);
+historyStr = sprintf(<span class="string">'%s\n\t.Name "%s"'</span>,historyStr,name);
+historyStr = sprintf(<span class="string">'%s\n\t.Width "%s"'</span>,historyStr,num2str(width));
+historyStr = sprintf(<span class="string">'%s\n\t.Curve "%s"'</span>,historyStr,curve);
+historyStr = sprintf(<span class="string">'%s\n\t.CurveItem1 "%s"'</span>,historyStr,curveItem1);
+historyStr = sprintf(<span class="string">'%s\n\t.CurveItem2 "%s"'</span>,historyStr,curveItem2);
+historyStr = sprintf(<span class="string">'%s\n\t.EdgeId1 "%s"'</span>,historyStr,num2str(edgeId1));
+historyStr = sprintf(<span class="string">'%s\n\t.EdgeId2 "%s"'</span>,historyStr,num2str(edgeId2));
+historyStr = sprintf(<span class="string">'%s\n\t.VertexId1 "%s"'</span>,historyStr,num2str(vertexId1));
+historyStr = sprintf(<span class="string">'%s\n\t.VertexId2 "%s"'</span>,historyStr,num2str(vertexId2));
+historyStr = sprintf(<span class="string">'%s\n\t.Create'</span>,historyStr);
+historyStr = sprintf(<span class="string">'%s\nEnd With'</span>,historyStr);
+historyHeader = [ <span class="string">'define curve chamfer: '</span> curve <span class="string">':'</span> name <span class="string">' on: '</span> curveItem1 <span class="string">','</span> curveItem1];
+status = oMWS.invoke(<span class="string">'AddToHistory'</span>,historyHeader,historyStr);
+<span class="keyword">end</span>
+</pre><p class="footer"><br>
+            Published with MATLAB&reg; 7.5<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+function status = f_ChamferCurve(oMWS,name,width,curve,curveItem1,curveItem2,edgeId1,edgeId2,vertexId1,vertexId2)
+%% DEFINE CHAMFER CURVE
+%
+%% FIELD DEFINATION
+%  name 
+%          Sets the name of the new chamfer item.
+%  width 
+%         Specify a valid expression for the width of the chamfer.
+%  curve 
+%         Specifies the curve the new created chamfer item object will belong to. 
+%  curveItem1 
+%         Selects a specified curve item which has to belong to the same curve object as curve item No.2.
+%  curveItem2 
+%          Selects a specified curve item which has to belong to the same curve object as curve item No.1.
+%  edgeId1 
+%         Defines a specified edge of a curve item by its identity number.
+%  edgeId2 
+%          Defines a specified edge of a curve item by its identity number.
+%  vertexId1 
+%         Defines a specified vertex of a curve item by its identity number.
+%  vertexId2 
+%         Defines a specified vertex of a curve item by its identity number.
+%% EXAMPLE:
+%  status = f_ChamferCurve(oMWS,name,width,curve,curveItem1,curveItem2,edgeId1,edgeId2,vertexId1,vertexId2);
+%  status = f_ChamferCurve(oMWS,'chamfer1',4,'curve1','rectangle1','rectangle1',2,3,3,3);
+%% MATLAB SCRIPT
+historyStr = [];
+historyStr = sprintf('With ChamferCurve');
+historyStr = sprintf('%s\n\t.Reset',historyStr);
+historyStr = sprintf('%s\n\t.Name "%s"',historyStr,name);
+historyStr = sprintf('%s\n\t.Width "%s"',historyStr,num2str(width));
+historyStr = sprintf('%s\n\t.Curve "%s"',historyStr,curve);
+historyStr = sprintf('%s\n\t.CurveItem1 "%s"',historyStr,curveItem1);
+historyStr = sprintf('%s\n\t.CurveItem2 "%s"',historyStr,curveItem2);
+historyStr = sprintf('%s\n\t.EdgeId1 "%s"',historyStr,num2str(edgeId1));
+historyStr = sprintf('%s\n\t.EdgeId2 "%s"',historyStr,num2str(edgeId2));
+historyStr = sprintf('%s\n\t.VertexId1 "%s"',historyStr,num2str(vertexId1));
+historyStr = sprintf('%s\n\t.VertexId2 "%s"',historyStr,num2str(vertexId2));
+historyStr = sprintf('%s\n\t.Create',historyStr);
+historyStr = sprintf('%s\nEnd With',historyStr);
+historyHeader = [ 'define curve chamfer: ' curve ':' name ' on: ' curveItem1 ',' curveItem1];
+status = oMWS.invoke('AddToHistory',historyHeader,historyStr);
+end
+##### SOURCE END #####
+-->
+   </body>
+</html>

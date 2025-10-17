@@ -1,0 +1,9 @@
+Units: mm, ghz
+Background: vacuum
+Boundaries: all open
+Mesh: optimized for planar structure
+      (ratiolimit=20, 
+       pec edge refinement=6,
+       merge thin layer fixpoints=on)
+Bounding box: visible
+Energy-Based Mesh Adaption Scheme

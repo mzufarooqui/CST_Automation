@@ -1,0 +1,187 @@
+' mystuff
+
+Sub Main ()
+
+'@ use template: Coupler (Waveguide)
+
+' Template for Waveguide Coupler' ==============================' (CSTxMWSxONLY)' set units to mm, ghzWith Units      .Geometry "mm"      .Frequency "ghz"      .Time "ns" End With ' set background material to pecWith Background      .Type "pec"      .XminSpace "0.0"      .XmaxSpace "0.0"      .YminSpace "0.0"      .YmaxSpace "0.0"      .ZminSpace "0.0"      .ZmaxSpace "0.0" End With ' set boundary conditions to electricWith Boundary     .Xmin "electric"      .Xmax "electric"      .Ymin "electric"      .Ymax "electric"      .Zmin "electric"      .Zmax "electric"      .Xsymmetry "none"      .Ysymmetry "none"      .Zsymmetry "none" End WithMesh.MinimumCurvatureRefinement "150" 
+
+
+'@ new component: component1
+
+Component.New "component1"
+
+
+'@ define brick: component1:brick1
+
+With Brick
+.Reset
+.Name "brick1"
+.Component "component1"
+.Material "Vacuum"
+.Xrange "-20", "20"
+.Yrange "-5", "5"
+.Zrange "0", "50"
+.Create
+End With
+
+
+'@ pick face
+
+Pick.PickFaceFromId "component1:brick1", "1" 
+
+
+'@ align wcs with eFace
+
+WCS.AlignWCSWithSelected "Face"
+
+
+'@ pick face
+
+Pick.PickFaceFromId "component1:brick1", "1" 
+
+
+'@ define port: 1
+
+With Port
+	.Reset
+	.PortNumber "1"
+	.Label "1"
+	.NumberOfModes "3"
+	.AdjustPolarization "False"
+	.PolarizationAngle "0.0"
+	.ReferencePlaneDistance "0"
+	.TextSize "50"
+	.Coordinates "Picks"
+	.Orientation "positive"
+	.PortOnBound "False"
+	.ClipPickedPortToBound "False"
+	.SingleEnded "False"
+	.Xrange "0", "0"
+	.Yrange "0", "0"
+	.Zrange "0", "0"
+	.XrangeAdd "0", "0"
+	.YrangeAdd "0", "0"
+	.ZrangeAdd "0", "0"
+	.AddModeLineByPoint "1", "0", "-5", "0", "0", "5", "0", "False" 
+	.AddModeLine "1", "1", "1", "1" 
+	.AddModeLineByPoint "2", "2.5", "-5", "0", "2.5", "5", "0", "False" 
+	.AddModeLine "2", "2", "2", "2" 
+	.PortImpedanceAndCalibration "True"
+	.Create
+End With
+
+
+'@ clear picks
+
+Pick.ClearAllPicks
+
+
+'@ pick face
+
+Pick.PickFaceFromId "component1:brick1", "2" 
+
+
+'@ align wcs with eFace
+
+WCS.AlignWCSWithSelected "Face"
+
+
+'@ pick face
+
+Pick.PickFaceFromId "component1:brick1", "2" 
+
+
+'@ define port: 2
+
+With Port
+	.Reset
+	.PortNumber "2"
+	.Label "2"
+	.NumberOfModes "3"
+	.AdjustPolarization "False"
+	.PolarizationAngle "0.0"
+	.ReferencePlaneDistance "0"
+	.TextSize "50"
+	.Coordinates "Picks"
+	.Orientation "positive"
+	.PortOnBound "False"
+	.ClipPickedPortToBound "False"
+	.SingleEnded "False"
+	.Xrange "0", "0"
+	.Yrange "0", "0"
+	.Zrange "0", "0"
+	.XrangeAdd "0", "0"
+	.YrangeAdd "0", "0"
+	.ZrangeAdd "0", "0"
+	.AddModeLineByPoint "3", "0", "-5", "-50", "0", "5", "-50", "True" 
+	.AddModeLine "1", "3", "3", "3" 
+	.AddModeLineByPoint "4", "2.5", "-5", "-50", "2.5", "5", "-50", "True" 
+	.AddModeLine "2", "4", "4", "4" 
+	.PortImpedanceAndCalibration "True"
+	.Create
+End With
+
+
+'@ clear picks
+
+Pick.ClearAllPicks
+
+
+'@ Solver
+
+With Solver
+	.FrequencyRange "10", "11"
+End With
+
+
+'@ set mesh properties
+
+With MeshSettings
+	.SetMeshType "Hex"
+	.Set "Version", 0
+	.SetMeshType "Tet"
+	.Set "Version", 0
+	.SetMeshType "Srf"
+	.Set "Version", 0
+	.SetMeshType "SrfML"
+	.Set "Version", 0
+End With
+With Mesh
+	.LinesPerWavelength "10"
+	.MinimumStepNumber "10"
+	.Automesh "True"
+	.UseRatioLimit "True"
+	.RatioLimit "10"
+	.MeshType "PBA"
+	.SetCreator "High Frequency"
+End With
+
+
+'@ define solver parameters
+
+Mesh.MeshType "PBA"
+Mesh.SetCreator "High Frequency"
+
+With Solver
+	.CalculationType "TD-S"
+	.StimulationPort "1"
+	.StimulationMode "1"
+	.SteadyStateLimit "-30"
+	.MeshAdaption "False"
+	.AutoNormImpedance "False"
+	.CalculateModesOnly "False"
+	.SParaSymmetry "False"
+	.StoreTDResultsInCache "False"
+	.FullDeembedding "False"
+	.SuperimposePLWExcitation "False"
+	.UseSensitivityAnalysis "False"
+End With
+
+
+'@ activate global coordinates
+
+WCS.ActivateWCS "global"
+
+
+End Sub

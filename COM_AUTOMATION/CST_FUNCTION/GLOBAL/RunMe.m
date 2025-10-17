@@ -1,0 +1,10 @@
+close all;clear all;clc;
+addpath(genpath('D:\USERS\Farooqui\FAROOQUI_TOOLS'));
+projectName = [pwd '\SKALA_semplificata_with_soil.cst'];
+oCST_Studio = f_OpenCST_StudioSuit();
+oMWS = f_OpenCST_MWS_Project(oCST_Studio,projectName);
+f_UpdateMesh(oMWS);
+f_UpdateModel(oMWS);
+f_Delete_All_Results(oMWS);
+f_StartSolver(oMWS);
+f_SendMail('cnr.ieiit.ae.ed@gmail.com','cnr1e11t@e@d','zunnoorainfarooqui@gmail.com', 'COM-EM-AT Notification', 'Your current set of simulations have been finished', []);

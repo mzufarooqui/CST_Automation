@@ -1,0 +1,12 @@
+Units: mm, ghz
+Background: vacuum
+Boundaries: electric
+Mesh: optimized for planar structure
+      (ratiolimit=20, 
+       pec edge refinement=6,
+       merge thin layer fixpoints=on)
+Solver: optimized for resonant structure
+      (max. number of pulses=50, 
+       online ar-filter=on)
+Bounding box: visible
+Energy-Based Mesh Adaption Scheme

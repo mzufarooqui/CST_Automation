@@ -1,0 +1,5 @@
+This template is meant to be used in addition to another application specific template. 
+
+Intersection check: Activated for thermal material properties. 
+
+Background Material set to normal (Rho:1.293, Therm.cond:0.024, Heat capacity:1.005)

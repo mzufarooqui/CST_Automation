@@ -1,0 +1,135 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>f_ChamferEdge</title>
+      <meta name="generator" content="MATLAB 7.5">
+      <meta name="date" content="2012-03-05">
+      <meta name="m-file" content="f_ChamferEdge"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content">
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#2">DEFINE CHAMFER EDGE</a></li>
+               <li><a href="#3">FIELD DEFINATION</a></li>
+               <li><a href="#4">EXAMPLE:</a></li>
+               <li><a href="#5">MATLAB SCRIPT</a></li>
+            </ul>
+         </div><pre class="codeinput"><span class="keyword">function</span> status = f_ChamferEdge(oMWS,componentName,solidName,depth,angle,bSwitch,faceID)
+</pre><h2>DEFINE CHAMFER EDGE<a name="2"></a></h2>
+         <p>This option cuts all previously picked edges to the specified depth. The parameter angle defines the angle of the chamfer
+            in degrees (default is 45.0&deg;). There are two possibilities the chamfer width and the angle can be applied to the selected
+            edge. Once is to the right and once is to the left of the selected edges. The parameter switch is to apply the specified settings
+            to the other direction. The faceID will determine from which face we measure the angle (if switch is true, it is the opposite)
+            If depth is chosen in a way that the structure would change significantly, the operation might not be possible.
+         </p>
+         <h2>FIELD DEFINATION<a name="3"></a></h2><pre>depth
+        If depth is chosen in a way that the structure would change significantly, the operation might not be possible.
+angle
+       The parameter angle defines the angle of the chamfer in degrees (default is 45.0&deg;).
+bSwitch
+       There are two possibilities the chamfer width and the angle can be applied to the selected edge. Once is to the right and once is to the left of the selected edges.
+       The parameter switch is to apply the specified settings to the other direction.
+faceID
+       The faceID will determine from which face we measure the angle (if switch is true, it is the opposite)</pre><h2>EXAMPLE:<a name="4"></a></h2><pre>status = f_ChamferEdge(oMWS,componentName,solidName,depth,angle,bSwitch,faceID)
+status = f_ChamferEdge(oMWS,'component1','solid1',2,45,'False',5)</pre><h2>MATLAB SCRIPT<a name="5"></a></h2><pre class="codeinput">historyStr    = sprintf(<span class="string">'Solid.ChamferEdge "%s", "%s", "%s", "%s" '</span>,num2str(depth),num2str(angle),num2str(bSwitch),num2str(faceID));
+historyHeader = [ <span class="string">'chamfer edges of: '</span> componentName <span class="string">':'</span> solidName ];
+status        = oMWS.invoke(<span class="string">'AddToHistory'</span>,historyHeader,historyStr);
+<span class="keyword">end</span>
+</pre><p class="footer"><br>
+            Published with MATLAB&reg; 7.5<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+function status = f_ChamferEdge(oMWS,componentName,solidName,depth,angle,bSwitch,faceID)
+%% DEFINE CHAMFER EDGE
+% This option cuts all previously picked edges to the specified depth. The parameter angle defines the angle of the chamfer in degrees (default is 45.0°).
+% There are two possibilities the chamfer width and the angle can be applied to the selected edge. Once is to the right and once is to the left of the selected edges. 
+% The parameter switch is to apply the specified settings to the other direction. The faceID will determine from which face we measure the angle (if switch is true, it is the opposite)
+% If depth is chosen in a way that the structure would change significantly, the operation might not be possible. 
+%% FIELD DEFINATION
+%  depth 
+%          If depth is chosen in a way that the structure would change significantly, the operation might not be possible. 
+%  angle 
+%         The parameter angle defines the angle of the chamfer in degrees (default is 45.0°).
+%  bSwitch 
+%         There are two possibilities the chamfer width and the angle can be applied to the selected edge. Once is to the right and once is to the left of the selected edges. 
+%         The parameter switch is to apply the specified settings to the other direction.
+%  faceID 
+%         The faceID will determine from which face we measure the angle (if switch is true, it is the opposite)
+%% EXAMPLE:
+%  status = f_ChamferEdge(oMWS,componentName,solidName,depth,angle,bSwitch,faceID)
+%  status = f_ChamferEdge(oMWS,'component1','solid1',2,45,'False',5)
+%% MATLAB SCRIPT
+historyStr    = sprintf('Solid.ChamferEdge "%s", "%s", "%s", "%s" ',num2str(depth),num2str(angle),num2str(bSwitch),num2str(faceID));
+historyHeader = [ 'chamfer edges of: ' componentName ':' solidName ];
+status        = oMWS.invoke('AddToHistory',historyHeader,historyStr);
+end
+##### SOURCE END #####
+-->
+   </body>
+</html>

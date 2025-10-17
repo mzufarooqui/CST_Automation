@@ -1,0 +1,19 @@
+function status = f_CreateHexahedralLegacy(oMWS)
+historyStr = [];
+historyStr = sprintf('With MeshSettings');
+historyStr = sprintf('%s\n\t.SetMeshType "Hex"',historyStr);
+historyStr = sprintf('%s\n\t.Set "Version", 0%',historyStr);
+historyStr = sprintf('%s\n\tEnd With',historyStr);
+historyStr = sprintf('%s\n\t',historyStr);
+historyStr = sprintf('%s\n\tWith Mesh',historyStr);
+historyStr = sprintf('%s\n\t.UseRatioLimit "True"',historyStr);
+historyStr = sprintf('%s\n\t.RatioLimit "10"',historyStr);
+historyStr = sprintf('%s\n\t.LinesPerWavelength "mL"',historyStr);
+historyStr = sprintf('%s\n\t.MinimumStepNumber "mL"',historyStr);
+historyStr = sprintf('%s\n\t.Automesh "True"',historyStr);
+historyStr = sprintf('%s\n\t.MeshType "PBA"',historyStr);
+historyStr = sprintf('%s\n\t.SetCreator "High Frequency"',historyStr);
+historyStr = sprintf('%s\n\tEnd With',historyStr);
+historyHeader = [ 'set mesh properties (Hexahedral)' ];
+status = oMWS.invoke('AddToHistory',historyHeader,historyStr);
+end

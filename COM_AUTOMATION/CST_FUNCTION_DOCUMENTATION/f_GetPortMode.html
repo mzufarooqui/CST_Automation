@@ -1,0 +1,206 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>f_GetPortMode</title>
+      <meta name="generator" content="MATLAB 7.5">
+      <meta name="date" content="2012-01-24">
+      <meta name="m-file" content="f_GetPortMode"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content">
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#2">GET PORT MODES</a></li>
+               <li><a href="#3">FUNCTION ARGUMENT DEFINATION</a></li>
+               <li><a href="#4">EXAMPLE:</a></li>
+               <li><a href="#5">MATLAB SCRIPT</a></li>
+            </ul>
+         </div><pre class="codeinput"><span class="keyword">function</span> portModes = f_GetPortMode(oMWS,exportMode,stepX,stepY,stepZ)
+</pre><h2>GET PORT MODES<a name="2"></a></h2>
+         <h2>FUNCTION ARGUMENT DEFINATION<a name="3"></a></h2><pre>portModes = f_GetPortMode(oMWS,exportMode,stepX,stepY,stepZ)</pre><p><b>INPUT PARAMETER</b></p><pre>oMWS
+exportMode
+         'FixedNumber':  Fixed number of samples
+         'FixedWidth' :  Fixed step width
+stepX
+         Number of steps or step width in x-direction
+stepY
+         Number of steps or step width in y-direction
+stepZ
+         Number of steps or step width in z-direction</pre><pre>*OUTPUT PARAMETER*</pre><pre>portModes
+       portNumber      : port number
+       index           : mode number
+       cutoffFreq      : cutoff frequency
+       modeType        : type of mode: 'TE','TM','TEM','HYBRID'
+       waveImped       : wave impedance at the following frequency
+       waveImpedAtFreq : frequency at which wave impedance calculate
+       xCoord          : x coordinate
+       yCoord          : y coordinate
+       zCoord          : z coordinate
+       ex              : x component of the e mode
+       ey              : y component of the e mode
+       ez              : z component of the e mode
+       hx              : x component of the h mode
+       hy              : y component of the h mode
+       hz              : z component of the h mode</pre><h2>EXAMPLE:<a name="4"></a></h2>
+         <p>portModes = f_GetPortMode(oMWS,exportMode,stepX,stepY,stepZ) portModes = f_GetPortMode(oMWS,'FixedNumber',12,8,1)</p>
+         <h2>MATLAB SCRIPT<a name="5"></a></h2><pre class="codeinput">portModes    = [];
+oASCIIExport = oMWS.invoke(<span class="string">'ASCIIExport'</span>);
+oResultTree  = oMWS.invoke(<span class="string">'ResultTree'</span>);
+modeName     = oResultTree.invoke(<span class="string">'GetFirstChildName'</span>,<span class="string">'2D/3D Results\Port Modes\Port1'</span>);
+index = 1;
+<span class="keyword">while</span> ~isempty(modeName)
+    oMWS.invoke(<span class="string">'SelectTreeItem'</span>,modeName);
+    oASCIIExport.invoke(<span class="string">'Reset'</span>);
+    oASCIIExport.invoke(<span class="string">'FileName'</span>,[pwd <span class="string">'\TEMP\'</span> modeName(end-1:end) <span class="string">'.txt'</span>]);
+    oASCIIExport.invoke(<span class="string">'Mode'</span>,exportMode);
+    oASCIIExport.invoke(<span class="string">'StepX'</span>,stepX);
+    oASCIIExport.invoke(<span class="string">'StepY'</span>,stepY);
+    oASCIIExport.invoke(<span class="string">'StepZ'</span>,stepZ);
+    oASCIIExport.invoke(<span class="string">'Execute'</span>);
+    temp = importdata([modeName(end-1:end) <span class="string">'.txt'</span>]);
+    portModes(index).colDef = temp.textdata{1,:};
+    portModes(index).name   = modeName(end-1:end);
+    portModes(index).data   = temp.data;
+    modeName = oResultTree.invoke(<span class="string">'GetNextItemName'</span>,modeName);
+    index = index + 1;
+<span class="keyword">end</span>
+<span class="keyword">if</span> isempty(portModes)
+    disp(<span class="string">'PORT MODES ARE NOT AVAILABLE IN CST'</span>)
+<span class="keyword">end</span>
+</pre><p class="footer"><br>
+            Published with MATLAB&reg; 7.5<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+function portModes = f_GetPortMode(oMWS,exportMode,stepX,stepY,stepZ)
+%% GET PORT MODES
+%% FUNCTION ARGUMENT DEFINATION
+%  portModes = f_GetPortMode(oMWS,exportMode,stepX,stepY,stepZ)
+%
+% *INPUT PARAMETER*
+%
+%  oMWS
+%  exportMode
+%           'FixedNumber':  Fixed number of samples
+%           'FixedWidth' :  Fixed step width
+%  stepX
+%           Number of steps or step width in x-direction
+%  stepY
+%           Number of steps or step width in y-direction
+%  stepZ
+%           Number of steps or step width in z-direction
+%
+%  *OUTPUT PARAMETER*
+%
+%  portModes
+%         portNumber      : port number
+%         index           : mode number
+%         cutoffFreq      : cutoff frequency
+%         modeType        : type of mode: 'TE','TM','TEM','HYBRID'
+%         waveImped       : wave impedance at the following frequency
+%         waveImpedAtFreq : frequency at which wave impedance calculate
+%         xCoord          : x coordinate
+%         yCoord          : y coordinate
+%         zCoord          : z coordinate
+%         ex              : x component of the e mode
+%         ey              : y component of the e mode
+%         ez              : z component of the e mode
+%         hx              : x component of the h mode
+%         hy              : y component of the h mode
+%         hz              : z component of the h mode
+%% EXAMPLE:
+% portModes = f_GetPortMode(oMWS,exportMode,stepX,stepY,stepZ)
+% portModes = f_GetPortMode(oMWS,'FixedNumber',12,8,1)
+%% MATLAB SCRIPT
+portModes    = [];
+oASCIIExport = oMWS.invoke('ASCIIExport');
+oResultTree  = oMWS.invoke('ResultTree');
+modeName     = oResultTree.invoke('GetFirstChildName','2D/3D Results\Port Modes\Port1');
+index = 1;
+while ~isempty(modeName)
+    oMWS.invoke('SelectTreeItem',modeName);
+    oASCIIExport.invoke('Reset');
+    oASCIIExport.invoke('FileName',[pwd '\TEMP\' modeName(end-1:end) '.txt']);
+    oASCIIExport.invoke('Mode',exportMode);
+    oASCIIExport.invoke('StepX',stepX);
+    oASCIIExport.invoke('StepY',stepY);
+    oASCIIExport.invoke('StepZ',stepZ);
+    oASCIIExport.invoke('Execute');
+    temp = importdata([modeName(end-1:end) '.txt']);
+    portModes(index).colDef = temp.textdata{1,:};
+    portModes(index).name   = modeName(end-1:end);
+    portModes(index).data   = temp.data;
+    modeName = oResultTree.invoke('GetNextItemName',modeName);
+    index = index + 1;
+end
+if isempty(portModes)
+    disp('PORT MODES ARE NOT AVAILABLE IN CST')
+end
+##### SOURCE END #####
+-->
+   </body>
+</html>

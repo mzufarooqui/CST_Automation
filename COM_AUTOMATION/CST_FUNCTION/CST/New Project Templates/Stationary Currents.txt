@@ -1,0 +1,12 @@
+Useful for DC current problems
+
+Typical applications: sensors, coils, circuit breakers, IR drop simulations, grounding problems
+
+Units: mm
+Boundaries: tangential
+Background: normal, no space
+Mesh: optimized for stationary current structure
+  (Tetrahedral: restricted 
+     to conductive domain
+   Hexahedral: ratiolimit=50, 
+     minimum line number=20)

@@ -1,0 +1,17 @@
+[Author]
+peverini
+[Mesh Cells]
+
+[Mesh Type]
+Tetrahedral
+[Last Problem Type]
+High Frequency
+[Last Solver Type]
+HF Frequency Domain
+[Last Solver Type Abb]
+f
+[Results]
+Unavailable
+[Modeler Unique ID]
+5:circwg2rctwgtr_pertrasferimento.cst?93a7eb445ae1477ae8f5c09fb7a2d594?225969:numberofparameters=34:port=1>mode=1>zre=0>zim=0?port=1>mode=2>zre=0>zim=0?port=2>mode=1>zre=0>zim=0?port=2>mode=2>zre=0>zim=0?port=3>mode=1>zre=0>zim=0?port=4>mode=1>zre=0>zim=0:::lwk1?lwk2?lwk3?lwk4?lwkr1?delta_wga2?delta_wga3?delta_wgb2?delta_wgb3?delta_wgd2?delta_wgd3?delta_wgh2?delta_wgh3?delta_wgr?lin1?lin2?lin3?wga1?wga2?wga3?wga4?wgb1?wgb2?wgb3?wgb4?wgd1?wgd2?wgd3?wgh1?wgh2?wgh3?wgr?wgr1?wgs1
+[Comment]
